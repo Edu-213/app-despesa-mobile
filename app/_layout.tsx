@@ -8,7 +8,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     (async () => {
-      await AsyncStorage.removeItem("onboardingSeen");
+      //await AsyncStorage.removeItem("onboardingSeen");
       const seen = await AsyncStorage.getItem("onboardingSeen");
       setFirstTime(seen ? false : true);
     })();

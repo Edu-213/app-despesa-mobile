@@ -2,24 +2,13 @@ import React, { useState } from "react";
 import { TextInput, TextInputProps, StyleSheet, View, TouchableOpacity } from "react-native";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Colors } from "@/constants/Colors";
 
 type ThemedTextInputProps = TextInputProps & {
-  lightColor?: string;
-  darkColor?: string;
-  lightBg?: string;
-  darkBg?: string;
-  lightFocusBg?: string;
-  darkFocusBg?: string;
   iconName?: string;
 };
 
 export function ThemedTextInput({ 
-    lightColor, 
-    darkColor, 
-    lightBg, 
-    darkBg, 
-    lightFocusBg, 
-    darkFocusBg, 
     iconName, 
     style,
     secureTextEntry,
@@ -28,9 +17,10 @@ export function ThemedTextInput({
         const [isFocused, setIsFocused] = useState(false);
         const [showPassword, setShowPassword] = useState(false);
 
-  const textColor = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
-  const backgroundColor = useThemeColor({ light: isFocused ? lightFocusBg ?? lightBg : lightBg, dark: isFocused ? darkFocusBg ?? darkBg : darkBg}, 'background');
-  const iconColor = useThemeColor({light: '242D35', dark: '#F5F6F7'}, 'text');
+  const textColor = useThemeColor({ light: Colors.light.inputText, dark: Colors.dark.inputText }, 'text');
+  const backgroundColor = useThemeColor({ light: isFocused ? Colors.light.inputBgFocus ?? Colors.light.inputBg : Colors.light.inputBg, dark: isFocused ? Colors.dark.inputBgFocus ?? Colors.dark.inputBg : Colors.dark.inputBg}, 'background');
+  const iconColor = useThemeColor({light: Colors.light.iconColor, dark: Colors.dark.iconColor}, 'text');
+  const borderColor = useThemeColor({ light: Colors.light.inputBorder, dark: Colors.dark.inputBorder}, 'text');
 
   return (
     <View>
@@ -38,7 +28,7 @@ export function ThemedTextInput({
             <Icon name={iconName} size={20} color={iconColor} style={styles.iconLeft}/>
         )}
         <TextInput
-            style={[styles.input, { color: textColor, backgroundColor }, style]}
+            style={[styles.input, { color: textColor, backgroundColor, borderColor }, style]}
             placeholderTextColor={textColor}
             secureTextEntry={secureTextEntry && !showPassword}
             onFocus={() => setIsFocused(true)}
@@ -67,8 +57,7 @@ const styles = StyleSheet.create({
     height: 48,
     width: 327,
     borderWidth: 1,
-    borderColor: '#6B7580',
-    borderRadius: 8,
+    borderRadius: 15,
     paddingHorizontal: 15,
     fontSize: 16,
     marginBottom: 15,
